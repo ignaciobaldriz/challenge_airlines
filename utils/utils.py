@@ -51,3 +51,10 @@ def delay_rate(df):
     rate = (df['atraso_15'].sum() / df['atraso_15'].count() ) * 100
     delay_rate_r = round(rate, 2)
     return delay_rate_r
+
+
+def get_categs_order(df, column_name):
+    col = df.groupby(['{}'.format(column_name)]).apply(delay_rate).sort_values(ascending=False)
+    col_order = col.keys()
+
+    return col_order
