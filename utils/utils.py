@@ -58,3 +58,15 @@ def get_categs_order(df, column_name):
     col_order = col.keys()
 
     return col_order
+
+
+def find_outliers(col):
+    q1 = col.quantile(.25)
+    q3 = col.quantile(.75)
+    IQR = q3 - q1
+    ll = q1 - (1.5*IQR)
+    ul = q3 + (1.5*IQR)
+    upper_outliers = col[col > ul].index.tolist()
+    lower_outliers = col[col < ll].index.tolist()
+    bad_indices = list(set(upper_outliers + lower_outliers))
+    return(bad_indices)
